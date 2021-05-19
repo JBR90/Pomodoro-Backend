@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/pom
+Content-Type: application/json
+
+{
+"todo": "This is a thododdd !",
+"status": false
+
+
+}

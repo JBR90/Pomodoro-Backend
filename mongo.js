@@ -1,0 +1,1 @@
+mongodb+srv://fullstack:<password>@cluster0.ljkaq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
