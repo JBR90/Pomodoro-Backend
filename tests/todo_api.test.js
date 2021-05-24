@@ -18,9 +18,9 @@ const initialTodos = [
 
 beforeEach(async () => {
   await Todo.deleteMany({});
-  let todoObject = new Todo(initialTodos[0]);
+  let todoObject = new Todo(helper.initialTodos[0]);
   await todoObject.save();
-  todoObject = new Todo(initialTodos[1]);
+  todoObject = new Todo(helper.initialTodos[1]);
   await todoObject.save();
 });
 
@@ -34,7 +34,7 @@ test("todos are returned as json", async () => {
 test("there are two notes", async () => {
   const response = await api.get("/api/pom");
 
-  expect(response.body).toHaveLength(initialTodos.length);
+  expect(response.body).toHaveLength(helper.initialTodos.length);
 });
 
 test("the first note status is false", async () => {
@@ -50,7 +50,7 @@ test("a specific todo is within the returned notes", async () => {
   expect(contents).toContain("i must do this");
 });
 
-test("a valid note can be added", async () => {
+test("a valid todo can be added", async () => {
   const newTodo = {
     todo: "this is a test todo",
     status: "false",
@@ -62,10 +62,11 @@ test("a valid note can be added", async () => {
     .expect(200)
     .expect("Content-Type", /application\/json/);
 
-  const response = await api.get("/api/pom");
-  const contents = response.body.map((r) => r.todo);
+  const todosAtEnd = await helper.todosInDb();
 
-  expect(response.body).toHaveLength(initialTodos.length + 1);
+  expect(todosAtEnd).toHaveLength(helper.initialTodos.length + 1);
+
+  const contents = todosAtEnd.map((t) => t.todo);
   expect(contents).toContain("this is a test todo");
 });
 
@@ -76,9 +77,39 @@ test("todo without content is not added", async () => {
 
   await api.post("/api/pom").send(newTodo).expect(400);
 
-  const response = await api.get("/api/pom");
+  const todosAtEnd = await helper.todosInDb();
 
-  expect(response.body).toHaveLength(initialTodos.length);
+  expect(todosAtEnd).toHaveLength(helper.initialTodos.length);
+});
+
+test("a specific todo can be viewed", async () => {
+  const todoAtStart = await helper.todosInDb();
+
+  const todoToView = todoAtStart[0];
+
+  const resultTodo = await api
+    .get(`/api/pom/${todoToView.id}`)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  const processedTodoToView = JSO.parse(JSON.stringify(todoToView));
+
+  expect(resultTodo.body).toEqual(processedTodoToView);
+});
+
+test("a todo can be deleted", async () => {
+  const todosAtStart = await helper.todosInDb();
+  const todoToDelete = todosAtStart[0];
+
+  await api.delete(`/api/pom/${todoToDelete.id}`).expect(204);
+
+  const todoAtEnd = await helper.todosInDb();
+
+  expect(todoAtEnd).toHaveLength(helper.initialTodos.length - 1);
+
+  const contents = todoAtEnd.map((r) => r.todo);
+
+  expect(contents).not.toContain(todoToDelete.todo);
 });
 
 afterAll(() => {

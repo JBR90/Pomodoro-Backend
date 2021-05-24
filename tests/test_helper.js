@@ -22,13 +22,13 @@ const nonExistingId = async () => {
   return todo._id.toString();
 };
 
-const todoInDb = async () => {
-  const todo = await Todo.find({});
-  return notes.map((todo) => todo.toJSON());
+const todosInDb = async () => {
+  const todos = await Todo.find({});
+  return todos.map((todo) => todo.toJSON());
 };
 
 module.exports = {
   initialTodos,
   nonExistingId,
-  todoInDb,
+  todosInDb,
 };
