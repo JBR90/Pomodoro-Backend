@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const config = require("./utils/config");
 const logger = require("./utils/logger");
 const todoRouter = require("./controller/todos");
+// const usersRouter = require("./controller/users");
 const middleware = require("./utils/middleware");
 
 logger.info("connecting to", config.MONGODB_URI);
@@ -28,6 +29,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/pom", todoRouter);
+// app.use("/a[i/users", usersRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
