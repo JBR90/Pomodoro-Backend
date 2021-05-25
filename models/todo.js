@@ -3,8 +3,16 @@ const mongoose = require("mongoose");
 // const logger = require("../utils/logger");
 
 const todoSchema = new mongoose.Schema({
-  todo: String,
+  todo: {
+    type: String,
+    required: true,
+    minlength: 5,
+  },
   status: Boolean,
+  // user: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  // },
 });
 
 todoSchema.set("toJSON", {
