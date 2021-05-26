@@ -14,9 +14,10 @@ todoRouter.get("/", async (request, response) => {
 
 todoRouter.get("/:id", async (request, response, next) => {
   try {
-    const todos = await Todo.findById(request.params.id);
+    const todo = await Todo.findById(request.params.id);
+    console.log(todo);
     if (todo) {
-      response.json(todos);
+      response.json(todo);
     } else {
       response.status(404).end();
     }
@@ -40,13 +41,21 @@ todoRouter.post("/", async (request, response) => {
   }
 });
 
-todoRouter.delete("/:id", async (request, response) => {
+todoRouter.delete("/:id", async (request, response, next) => {
   try {
     await Todo.findByIdAndRemove(request.params.id);
-    console.log(response.status);
-  } catch (err) {
     response.status(204).end();
+  } catch (err) {
+    next(err);
   }
 });
+
+// todoRouter.delete("/:id", (request, response, next) => {
+//   Todo.findByIdAndRemove(request.params.id)
+//     .then(() => {
+//       response.status(204).end();
+//     })
+//     .catch((error) => next(error));
+// });
 
 module.exports = todoRouter;

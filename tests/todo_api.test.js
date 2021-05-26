@@ -92,7 +92,7 @@ test("a specific todo can be viewed", async () => {
     .expect(200)
     .expect("Content-Type", /application\/json/);
 
-  const processedTodoToView = JSO.parse(JSON.stringify(todoToView));
+  const processedTodoToView = JSON.parse(JSON.stringify(todoToView));
 
   expect(resultTodo.body).toEqual(processedTodoToView);
 });
@@ -100,6 +100,8 @@ test("a specific todo can be viewed", async () => {
 test("a todo can be deleted", async () => {
   const todosAtStart = await helper.todosInDb();
   const todoToDelete = todosAtStart[0];
+  console.log("todoTODelete");
+  console.log(todoToDelete);
 
   await api.delete(`/api/pom/${todoToDelete.id}`).expect(204);
 
