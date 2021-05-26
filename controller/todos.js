@@ -41,13 +41,10 @@ todoRouter.post("/", async (request, response) => {
   }
 });
 
+// refactored with express-async-errors library
 todoRouter.delete("/:id", async (request, response, next) => {
-  try {
-    await Todo.findByIdAndRemove(request.params.id);
-    response.status(204).end();
-  } catch (err) {
-    next(err);
-  }
+  await Todo.findByIdAndRemove(request.params.id);
+  response.status(204).end();
 });
 
 // todoRouter.delete("/:id", (request, response, next) => {

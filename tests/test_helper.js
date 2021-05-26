@@ -27,8 +27,14 @@ const todosInDb = async () => {
   return todos.map((todo) => todo.toJSON());
 };
 
+const usersInDb = async () => {
+  const users = await User.find({});
+  return users.map((u) => u.toJSON());
+};
+
 module.exports = {
   initialTodos,
   nonExistingId,
   todosInDb,
+  usersInDb,
 };

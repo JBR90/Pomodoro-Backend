@@ -18,10 +18,10 @@ const initialTodos = [
 
 beforeEach(async () => {
   await Todo.deleteMany({});
-  let todoObject = new Todo(helper.initialTodos[0]);
-  await todoObject.save();
-  todoObject = new Todo(helper.initialTodos[1]);
-  await todoObject.save();
+
+  const todoObjects = helper.initialTodos.map((todo) => new Todo(todo));
+  const promiseArray = todoObjects.map((todo) => todo.save());
+  await Promise.all(promiseArray);
 });
 
 test("todos are returned as json", async () => {

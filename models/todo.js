@@ -9,10 +9,10 @@ const todoSchema = new mongoose.Schema({
     minlength: 5,
   },
   status: Boolean,
-  // user: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  // },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 todoSchema.set("toJSON", {
