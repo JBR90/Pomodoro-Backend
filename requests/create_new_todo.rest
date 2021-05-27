@@ -2,8 +2,9 @@ POST http://localhost:3003/api/pom
 Content-Type: application/json
 
 {
-"todo": "This is a thododdd !",
-"status": false
+"todo": "This is a thododdd ! ooos",
+"status": false,
+"userId": "60af37e5260cc853bd5014ee"
 
 
 }
