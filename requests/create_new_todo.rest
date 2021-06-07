@@ -1,10 +1,8 @@
 POST http://localhost:3003/api/pom
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYWZiM2FlYzM5YTc0NzcxMmJkOGZlOSIsImlhdCI6MTYyMzA1MjI2Mn0.FfatK0Fnybo1Rbr1v2hloC8jRdBjVE4SmmNj63CMbO0
 
 {
-"todo": "This is a thododdd ! ooos",
-"status": false,
-"userId": "60af37e5260cc853bd5014ee"
-
-
+"todo": "Oh my chips",
+"status": false
 }

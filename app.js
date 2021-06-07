@@ -8,6 +8,7 @@ const config = require("./utils/config");
 const logger = require("./utils/logger");
 const todoRouter = require("./controller/todos");
 const usersRouter = require("./controller/users");
+const loginRouter = require("./controller/login");
 const middleware = require("./utils/middleware");
 
 logger.info("connecting to", config.MONGODB_URI);
@@ -31,6 +32,7 @@ app.use(express.json());
 
 app.use("/api/pom", todoRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/login", loginRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
