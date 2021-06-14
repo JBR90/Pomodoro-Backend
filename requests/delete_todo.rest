@@ -1,0 +1,3 @@
+DELETE http://localhost:3003/api/pom/60c6295f70f0395f9c886edd
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYzYyMDEwNmZhYTc4NTg5NjhkMjE5MiIsImlhdCI6MTYyMzU5NzE5NCwiZXhwIjoxNjIzNjAwNzk0fQ.fc0ttaM0-1B0ZuTNlts4o8q6KcVZdwKVx9vyOfy9E9c
+

@@ -40,12 +40,15 @@ const getTokenFrom = (request) => {
 };
 
 todoRouter.post("/", async (request, response) => {
-  logger.info(request.body);
   try {
     const body = request.body;
-    const token = getTokenFrom(request);
+    console.log("reqest token", request.token);
+    let token = request.token;
+    console.log("token from helper", token);
     const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log("decoded token", decodedToken);
     if (!token || !decodedToken.id) {
+      console.log("not found");
       return response.status(401).json({ error: "token mising or invalid" });
     }
     const user = await User.findById(decodedToken.id);
@@ -69,11 +72,42 @@ todoRouter.post("/", async (request, response) => {
 
 // refactored with express-async-errors library
 todoRouter.delete("/:id", async (request, response, next) => {
-  await Todo.findByIdAndRemove(request.params.id);
+  const id = request.params.id.toString();
+  console.log("todo id", id);
+
+  const todo = await Todo.findById(id);
+  console.log("todo", id);
+  const userFromTodo = todo.user;
+  console.log("user id from todo", userFromTodo);
+  const token = request.token;
+  console.log("token", token);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  console.log("decodedToten", decodedToken);
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: "token mising or invalid" });
+  }
+  const userFromToken = await User.findById(decodedToken.id);
+  if (!userFromToken) {
+    response.status(400).end();
+  }
+  console.log("userFromToken", userFromToken);
+  console.log("user id from todo", userFromTodo);
+
+  // if (!userFromToken) {
+  //   return response.status(404).json({ error: "User not found" });
+  // }
+
+  if (userFromToken.id.toString() == userFromTodo.toString()) {
+    await Todo.findByIdAndRemove(id);
+  } else {
+    response.status(400).end();
+  }
+
   response.status(204).end();
 });
 
 // todoRouter.delete("/:id", (request, response, next) => {
+//   console.log(request);
 //   Todo.findByIdAndRemove(request.params.id)
 //     .then(() => {
 //       response.status(204).end();

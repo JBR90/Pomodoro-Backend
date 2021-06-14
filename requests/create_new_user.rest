@@ -3,9 +3,9 @@ Content-Type: application/json
 
 {
 "todo": [],
-"username": "jbr",
-"name": "Superuser",
-"password": "password"
+"username": "root",
+"name": "Superuser3",
+"password": "secret"
 
 
 }

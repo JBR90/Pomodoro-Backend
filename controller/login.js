@@ -5,6 +5,7 @@ const User = require("../models/user");
 
 loginRouter.post("/", async (request, response) => {
   const body = request.body;
+  console.log(body);
 
   const user = await User.findOne({ username: body.username });
   const passwordCorrect =
@@ -26,6 +27,8 @@ loginRouter.post("/", async (request, response) => {
   const token = jwt.sign(userForToken, process.env.SECRET, {
     expiresIn: 60 * 60,
   });
+
+  console.log(token);
 
   response
     .status(200)
