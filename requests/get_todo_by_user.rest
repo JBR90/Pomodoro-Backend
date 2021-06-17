@@ -1,0 +1,2 @@
+GET http://localhost:3003/api/pom
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYzcxYjk1ODNjZDAxMTVlNzRjN2Y0NSIsImlhdCI6MTYyMzcwMzM0MiwiZXhwIjoxNjIzNzA2OTQyfQ.fBU4g3lDr_uov3igxGbTrGUbR0czmwl5nmEZqQfj1XU

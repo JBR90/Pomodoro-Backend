@@ -10,7 +10,22 @@ todoRouter.get("/", async (request, response) => {
       username: 1,
       name: 1,
     });
-    response.json(todos);
+    console.log(todos);
+    const token = request.token;
+    console.log("token", token);
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log("decodedToten", decodedToken);
+    // if (!token || !decodedToken.id) {
+    //   return response.status(401).json({ error: "token mising or invalid" });
+    // }
+
+    const userTodos = todos.filter((todo) => todo.user.id === decodedToken.id);
+    console.log("USER TODOS", userTodos);
+    if (userTodos) {
+      response.json(userTodos);
+    } else {
+      response.json(todos);
+    }
     // response.json(todos.map((todo) => todo.toJSON()));
   } catch (err) {
     response.status(400).end();
@@ -21,6 +36,7 @@ todoRouter.get("/:id", async (request, response, next) => {
   try {
     const todo = await Todo.findById(request.params.id);
     console.log(todo);
+
     if (todo) {
       response.json(todo);
     } else {
@@ -67,6 +83,24 @@ todoRouter.post("/", async (request, response) => {
     response.json(savedTodo);
   } catch (err) {
     response.status(400).end();
+  }
+});
+
+todoRouter.put("/:id", async (request, response, next) => {
+  // const { body } = request;
+  const id = request.params.id.toString();
+
+  const todo = {
+    status: request.body.status,
+  };
+  console.log(request.body);
+  console.log(todo);
+
+  const updatedTodo = await Todo.findByIdAndUpdate(id, todo, { new: true });
+  if (updatedTodo) {
+    response.status(200).json(updatedTodo.toJSON());
+  } else {
+    response.status(404).end();
   }
 });
 
