@@ -27,6 +27,7 @@ mongoose
     logger.error("Error connected to Mongose", error.message);
   });
 
+app.use(express.static("build"));
 app.use(cors());
 app.use(express.json());
 app.use(middleware.tokenExtractor);

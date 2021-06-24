@@ -6,7 +6,11 @@
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
-    "test": "NODE_ENV=test jest --verbose --runInBand --detectOpenHandles"
+    "test": "NODE_ENV=test jest --verbose --runInBand --detectOpenHandles",
+    "build:ui": "rm -rf build && cd ../pom/ && npm run build --prod && cp -r build ../Pomodoro-Backend",
+    "deploy": "git push heroku main",
+    "deploy:full": "npm run build:ui && got add . && git commit -m uibuild && git push && npm run deploy",
+    "logs:prod": "heroku logs --tail"
   },
   "author": "",
   "license": "ISC",
